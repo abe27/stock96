@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
+use Awcodes\FilamentGravatar\GravatarPlugin;
+use Awcodes\FilamentGravatar\GravatarProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -69,6 +71,12 @@ class WebPanelProvider extends PanelProvider
             ->brandLogoHeight('3.1rem')
             // ->favicon(asset('images/favicon.png'))
             ->databaseNotifications()
-            ->databaseNotificationsPolling('2s');
+            ->databaseNotificationsPolling('2s')
+            ->collapsibleNavigationGroups(true)
+            ->sidebarFullyCollapsibleOnDesktop()
+            ->defaultAvatarProvider(GravatarProvider::class)
+            ->plugins([
+                GravatarPlugin::make(),
+            ]);
     }
 }

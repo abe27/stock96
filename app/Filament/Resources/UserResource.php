@@ -19,32 +19,56 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'first_name', 'last_name', 'email'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('avatar')
+                    ->label('')
+                    ->avatar()
+                    ->directory('avatars')
+                    ->visibility('private')
+                    ->columnSpanFull()
+                    ->alignCenter(),
                 Forms\Components\TextInput::make('name')
+                    ->label('ชื่อผู้ใช้งาน')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label('ชื่ออีเมล')
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('first_name')
+                    ->label('ชื่อ')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
+                    ->label('นามสกุล')
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
+                    ->label('รหัสผ่าน')
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('role')
-                    ->maxLength(255)
-                    ->default('cust'),
-                Forms\Components\TextInput::make('avatar')
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('is_activated'),
+                Forms\Components\Radio::make('role')
+                    ->label('สิทธิ์การใช้งาน')
+                    ->inline()
+                    ->options([
+                        'admin' => 'ผู้ดูแลระบบ',
+                        'cust'  => 'ลูกค้า',
+                        'employee' => 'พนักงาน',
+                        'dealer' => 'ตัวแทนจำหน่าย',
+                    ])
+                    ->default('cust')
+                    ->columnStart(1),
+                Forms\Components\Checkbox::make('is_activated')
+                    ->label('อนุญาติให้เข้าสู่ระบบได้')
+                    ->columnStart(1),
             ]);
     }
 
@@ -53,9 +77,16 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                    ->label('ID')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('#')
+                    ->rowIndex(),
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->label(''),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('first_name')
@@ -64,13 +95,12 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('role')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('avatar')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_activated')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_activated')
+                    ->label('Activate'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
