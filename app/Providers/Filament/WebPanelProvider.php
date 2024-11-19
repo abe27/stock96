@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
+use App\Models\StoreName;
 use Awcodes\FilamentGravatar\GravatarPlugin;
 use Awcodes\FilamentGravatar\GravatarProvider;
 use Filament\Http\Middleware\Authenticate;
@@ -42,8 +43,8 @@ class WebPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -66,8 +67,8 @@ class WebPanelProvider extends PanelProvider
             ->topbar(true)
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->font('Sarabun')
-            // ->brandName('Electronic Data Interchange')
-            // ->brandLogo(asset('images/logo.png'))
+            ->brandName('Stock Web Application')
+            ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3.1rem')
             // ->favicon(asset('images/favicon.png'))
             ->databaseNotifications()

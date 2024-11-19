@@ -35,7 +35,7 @@ class StoreNameSeeder extends Seeder
             foreach ($storeNames as $storeName) {
                 $currency = Currency::where('name', $storeName['currency_id'])->first();
                 $storeName['currency_id'] = $currency->id;
-                \App\Models\StoreName::create($storeName);
+                \App\Models\StoreName::updateOrCreate(['name' => $storeName['name']], $storeName);
             }
         } catch (\Exception $ex) {
             Log::error($ex);

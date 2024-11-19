@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('store_names', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('currency_id')->unsigned()->constrained();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->longText('address_1')->nullable();
             $table->longText('address_2')->nullable();
