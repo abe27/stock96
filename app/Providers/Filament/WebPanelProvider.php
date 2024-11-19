@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -9,6 +10,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -27,6 +29,7 @@ class WebPanelProvider extends PanelProvider
             ->id('web')
             ->path('web')
             ->login()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -53,6 +56,19 @@ class WebPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->maxContentWidth(MaxWidth::Full)
+            ->sidebarWidth('15.5rem')
+            ->collapsedSidebarWidth('2rem')
+            ->navigation(true)
+            ->topbar(true)
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->font('Sarabun')
+            // ->brandName('Electronic Data Interchange')
+            // ->brandLogo(asset('images/logo.png'))
+            ->brandLogoHeight('3.1rem')
+            // ->favicon(asset('images/favicon.png'))
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('2s');
     }
 }
