@@ -17,27 +17,53 @@ class SupplierResource extends Resource
 {
     protected static ?string $model = Supplier::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-user';
+
+    protected static ?string $navigationLabel = 'ร้านค้า/ขายส่ง';
+
+    protected static ?string $slug = 'supplier';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationGroup = 'จัดการระบบ';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('avatar')
+                    ->label('')
+                    ->avatar()
+                    ->directory('avatars')
+                    ->visibility('private')
+                    ->columnSpanFull()
+                    ->alignCenter(),
                 Forms\Components\TextInput::make('name')
+                    ->label('ชื่อ')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address_1')
-                    ->maxLength(255),
+                    ->label('ที่อยู่'),
                 Forms\Components\Textarea::make('address_2')
+                    ->label('ที่อยู่เพิ่มเติม')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('mobile_bo')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('avatar')
-                    ->maxLength(255),
+                    ->label('เบอร์โทรศัพท์')
+                    ->columnStart(1),
                 Forms\Components\TextInput::make('vat')
+                    ->label('หัก%')
                     ->numeric()
                     ->default(0),
-                Forms\Components\Toggle::make('is_active'),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('สถานะ')
+                    ->columnStart(1),
             ]);
     }
 
@@ -45,20 +71,26 @@ class SupplierResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('ID')
+                    ->rowIndex(),
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->label(''),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('ชื่อ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address_1')
+                    ->label('ที่อยู่')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mobile_bo')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('avatar')
+                    ->label('เบอร์โทรศัพท์')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('vat')
+                    ->label('หัก%')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('สถานะ')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

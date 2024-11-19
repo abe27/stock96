@@ -95,21 +95,28 @@ class UserResource extends Resource
                 Tables\Columns\ImageColumn::make('avatar')
                     ->label(''),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('ชื่อผู้ใช้งาน')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('ชื่ออีเมล')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('first_name')
+                    ->label('ชื่อ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->label('นามสกุล')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('role')
-                    ->searchable(),
+                    ->label('สิทธิ์การใช้งาน')
+                    ->badge()
+                    ->default("Test"),
                 Tables\Columns\ToggleColumn::make('is_activated')
+                    ->label('อนุญาติให้เข้าสู่ระบบได้')
                     ->label('Activate'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

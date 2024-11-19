@@ -25,4 +25,24 @@ class Stock extends Model
         'adjust_by_id',
         'is_active',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
+    }
+
+    public function adjustBy()
+    {
+        return $this->belongsTo(User::class, 'adjust_by_id', 'id');
+    }
 }

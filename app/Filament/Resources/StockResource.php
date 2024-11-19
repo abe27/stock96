@@ -4,7 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StockResource\Pages;
 use App\Filament\Resources\StockResource\RelationManagers;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,40 +22,74 @@ class StockResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
+
+    protected static ?string $navigationLabel = 'คลังสินค้า';
+
+    protected static ?string $slug = 'stock';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $navigationGroup = 'ข้อมูลคลัง';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['category.name', 'product.name'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category_id')
+                Forms\Components\Select::make('category_id')
+                    ->label('หมวดหมู่')
+                    ->searchable()
+                    ->options(Category::all()->pluck('name', 'id'))
                     ->required(),
-                Forms\Components\TextInput::make('product_id')
-                    ->required(),
-                Forms\Components\TextInput::make('unit_id')
+                Forms\Components\Select::make('product_id')
+                    ->label('สินค้า')
+                    ->searchable()
+                    ->options(Product::all()->pluck('name', 'id'))
+                    ->required()
+                    ->columnStart(1),
+                Forms\Components\Select::make('unit_id')
+                    ->label('หน่วย')
+                    ->searchable()
+                    ->options(Unit::all()->pluck('name', 'id'))
                     ->required(),
                 Forms\Components\TextInput::make('quantity')
+                    ->label('จำนวน')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('price')
+                    ->label('ราคา')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('฿')
+                    ->columnStart(1),
                 Forms\Components\TextInput::make('cost_price')
+                    ->label('ราคาต้นทุน')
                     ->required()
-                    ->numeric(),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('min_qty')
                     ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('max_qty')
-                    ->numeric()
-                    ->default(500),
+                    ->prefix('฿'),
+                // Forms\Components\TextInput::make('min_qty')
+                //     ->numeric()
+                //     ->default(0),
+                // Forms\Components\TextInput::make('max_qty')
+                //     ->numeric()
+                //     ->default(500),
                 Forms\Components\TextInput::make('safety_stock')
+                    ->label('จำนวนที่ต้องการให้แจ้งเตือน')
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('adjust_by_id'),
+                Forms\Components\RichEditor::make('description')
+                    ->label('รายละเอียด')
+                    ->columnSpanFull(),
+                // Forms\Components\TextInput::make('adjust_by_id'),
                 Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                    ->label('สถานะ')
+                    ->required()
+                    ->columnStart(1),
             ]);
     }
 
@@ -60,30 +97,35 @@ class StockResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
-                Tables\Columns\TextColumn::make('category_id'),
-                Tables\Columns\TextColumn::make('product_id'),
-                Tables\Columns\TextColumn::make('unit_id'),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('ID')
+                    ->rowIndex(),
+                Tables\Columns\TextColumn::make('category.name'),
+                Tables\Columns\TextColumn::make('product.name'),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('unit.name'),
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cost_price')
-                    ->numeric()
+                    ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('min_qty')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('max_qty')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('safety_stock')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('adjust_by_id'),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('adjust_by_id')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

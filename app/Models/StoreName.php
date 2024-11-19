@@ -23,4 +23,9 @@ class StoreName extends Model
         'logo',
         'is_active',
     ];
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id', 'id');
+    }
 }
