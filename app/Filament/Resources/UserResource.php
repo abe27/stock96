@@ -17,7 +17,17 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-users';
+
+    protected static ?string $navigationLabel = 'ผู้ใช้งาน';
+
+    protected static ?string $slug = 'members';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $navigationGroup = 'จัดการระบบ';
 
     public static function getGloballySearchableAttributes(): array
     {
