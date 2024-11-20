@@ -17,7 +17,24 @@ class StatusResource extends Resource
 {
     protected static ?string $model = Status::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-backspace';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
+
+    protected static ?string $navigationLabel = 'ข้อมูลสถานะ';
+
+    protected static ?string $slug = 'status';
+
+    protected static ?int $navigationSort = 4;
+
+    protected static ?string $navigationGroup = 'จัดการระบบ';
+
+    public static ?string $pluralModelLabel = 'ข้อมูลสถานะ';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
+    }
 
     public static function form(Form $form): Form
     {
@@ -26,7 +43,8 @@ class StatusResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\RichEditor::make('description')
+                    ->translatable()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('color')
                     ->maxLength(255)
@@ -39,8 +57,9 @@ class StatusResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('ID')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('color')

@@ -19,7 +19,7 @@ class UnitResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $activeNavigationIcon = 'heroicon-m-tag';
+    protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
     protected static ?string $navigationLabel = 'หน่วย';
 

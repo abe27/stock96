@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Unit;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -100,45 +101,77 @@ class StockResource extends Resource
                 Tables\Columns\TextColumn::make('row_id')
                     ->label('ID')
                     ->rowIndex(),
-                Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('product.name'),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('หมวดหมู่')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('product.name')
+                    ->label('สินค้า')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->label('จำนวน')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('unit.name'),
+                Tables\Columns\TextColumn::make('unit.name')
+                    ->label('หน่วย')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->label('ราคา')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cost_price')
+                    ->label('ราคาต้นทุน')
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('min_qty')
+                    ->label('จำนวนต่ำสุด')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('max_qty')
+                    ->label('จำนวนสูงสุด')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('safety_stock')
+                    ->label('จำนวนสั่งซื้อล่วงหน้า')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('adjust_by_id')
+                    ->label('แก้ไขข้อมูลโดย')
+                    ->searchable()
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('สถานะ')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('สร้างเมื่อ')
+                    ->dateTime('d-m-Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('แก้ไขล่าสุด')
+                    ->dateTime('d-m-Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('หมวดหมู่')
+                    ->searchable()
+                    ->options(Category::all()->pluck('name', 'id')),
+                Tables\Filters\SelectFilter::make('unit_id')
+                    ->label('หน่วย')
+                    ->searchable()
+                    ->options(Unit::all()->pluck('name', 'id')),
+                Tables\Filters\SelectFilter::make('adjust_by_id')
+                    ->label('แก้ไขโดย')
+                    ->searchable()
+                    ->options(User::all()->pluck('name', 'id')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

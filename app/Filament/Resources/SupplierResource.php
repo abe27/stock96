@@ -19,7 +19,7 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $activeNavigationIcon = 'heroicon-m-user';
+    protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
     protected static ?string $navigationLabel = 'ร้านค้า/ขายส่ง';
 

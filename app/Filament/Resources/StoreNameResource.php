@@ -20,7 +20,7 @@ class StoreNameResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
-    protected static ?string $activeNavigationIcon = 'heroicon-m-home-modern';
+    protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
     protected static ?string $navigationLabel = 'ชื่อร้าน';
 

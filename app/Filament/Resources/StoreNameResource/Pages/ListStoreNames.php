@@ -13,7 +13,8 @@ class ListStoreNames extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('เพิ่มข้อมูล'),
         ];
     }
 }
