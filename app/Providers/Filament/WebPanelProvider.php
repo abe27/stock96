@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
-use App\Models\StoreName;
 use Awcodes\FilamentGravatar\GravatarPlugin;
 use Awcodes\FilamentGravatar\GravatarProvider;
 use Filament\Http\Middleware\Authenticate;
@@ -31,7 +30,7 @@ class WebPanelProvider extends PanelProvider
             ->default()
             ->id('web')
             ->path('web')
-            ->login()
+            ->login(Login::class)
             ->passwordReset()
             ->colors([
                 'primary' => Color::Amber,
@@ -68,7 +67,8 @@ class WebPanelProvider extends PanelProvider
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->font('Sarabun')
             ->brandName('Stock Web Application')
-            ->brandLogo(asset('images/logo.png'))
+            // ->brandLogo(asset('images/logo.png'))
+            ->brandLogo(fn() => view('filament.admin.logo'))
             ->brandLogoHeight('3.1rem')
             // ->favicon(asset('images/favicon.png'))
             ->databaseNotifications()

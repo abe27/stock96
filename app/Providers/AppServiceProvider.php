@@ -24,10 +24,10 @@ class AppServiceProvider extends ServiceProvider
             $switch
                 ->locales(['th', 'en'])
                 ->flags([
-                    'th' => asset('flags/th.svg'),
-                    'en' => asset('flags/us.svg'),
+                    'th' => asset('assets/flags/th.svg'),
+                    'en' => asset('assets/flags/us.svg'),
                 ])
-                ->flagsOnly()
+                // ->flagsOnly()
                 ->displayLocale('th'); // also accepts a closure
         });
     }

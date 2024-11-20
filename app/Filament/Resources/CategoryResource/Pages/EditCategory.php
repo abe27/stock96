@@ -13,7 +13,11 @@ class EditCategory extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->label('ลบข้อมูล')
+                ->icon('heroicon-o-x-circle')
+                ->requiresConfirmation()
+                ->button(),
         ];
     }
 }

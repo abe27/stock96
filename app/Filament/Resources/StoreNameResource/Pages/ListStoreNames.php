@@ -14,7 +14,9 @@ class ListStoreNames extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('เพิ่มข้อมูล'),
+                ->label('เพิ่มข้อมูล')
+                ->icon('heroicon-o-plus-circle')
+                ->button(),
         ];
     }
 }

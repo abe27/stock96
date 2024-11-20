@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class StatusResource extends Resource
 {
@@ -41,15 +43,26 @@ class StatusResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('หัวข้อ')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('description')
-                    ->translatable()
+                    ->label('รายละเอียด')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('color')
-                    ->maxLength(255)
+                Forms\Components\Radio::make('color')
+                    ->inline()
+                    ->label('สี')
+                    ->options([
+                        'primary' => 'สีฟ้าเข้ม',
+                        'success' => 'สีเขียว',
+                        'warning' => 'สีเหลือง',
+                        'danger' => 'สีแดง',
+                        'info' => 'สีฟ้า',
+                    ])
                     ->default('danger'),
-                Forms\Components\Toggle::make('is_active'),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('สถานะ')
+                    ->columnStart(1),
             ]);
     }
 
@@ -58,12 +71,18 @@ class StatusResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('row_id')
-                    ->label('ID')
+                    ->label('#')
                     ->rowIndex(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('หัวข้อ')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->label('รายละเอียด')
+                    ->html(),
                 Tables\Columns\TextColumn::make('color')
-                    ->searchable(),
+                    ->label(' ')
+                    ->badge()
+                    ->color(fn(string $state) => $state),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

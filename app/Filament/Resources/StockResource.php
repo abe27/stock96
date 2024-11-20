@@ -41,6 +41,7 @@ class StockResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(4)
             ->schema([
                 Forms\Components\Select::make('category_id')
                     ->label('หมวดหมู่')
@@ -61,16 +62,16 @@ class StockResource extends Resource
                 Forms\Components\TextInput::make('quantity')
                     ->label('จำนวน')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->columnStart(1),
                 Forms\Components\TextInput::make('price')
                     ->label('ราคา')
-                    ->required()
+                    ->readOnly()
                     ->numeric()
-                    ->prefix('฿')
-                    ->columnStart(1),
+                    ->prefix('฿'),
                 Forms\Components\TextInput::make('cost_price')
                     ->label('ราคาต้นทุน')
-                    ->required()
+                    ->readOnly()
                     ->numeric()
                     ->prefix('฿'),
                 // Forms\Components\TextInput::make('min_qty')
@@ -82,7 +83,8 @@ class StockResource extends Resource
                 Forms\Components\TextInput::make('safety_stock')
                     ->label('จำนวนที่ต้องการให้แจ้งเตือน')
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->columnStart(1),
                 Forms\Components\RichEditor::make('description')
                     ->label('รายละเอียด')
                     ->columnSpanFull(),

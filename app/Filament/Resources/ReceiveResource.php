@@ -17,9 +17,22 @@ class ReceiveResource extends Resource
 {
     protected static ?string $model = Receive::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-folder-plus';
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
+
+    protected static ?string $navigationLabel = 'รับสินค้า';
+
+    protected static ?string $slug = 'receive';
+
+    protected static ?int $navigationSort = 1;
+
+    // protected static ?string $navigationGroup = 'ข้อมูลคลัง';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['no', 'tax_no', 'received_on', 'supplier.name'];
+    }
 
     public static function form(Form $form): Form
     {

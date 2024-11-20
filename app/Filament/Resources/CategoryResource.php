@@ -21,16 +21,32 @@ class CategoryResource extends Resource
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
+    protected static ?string $navigationLabel = 'หมวดหมู่สินค้า';
+
+    protected static ?string $slug = 'category';
+
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationGroup = 'จัดการระบบ';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['no', 'name', 'description'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('หัวข้อ')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\RichEditor::make('description')
+                    ->label('รายละเอียด')
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_active'),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('สถานะ'),
             ]);
     }
 
@@ -38,17 +54,25 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('#')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('หัวข้อ')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->html()
+                    ->label('รายละเอียด'),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('สถานะ')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
