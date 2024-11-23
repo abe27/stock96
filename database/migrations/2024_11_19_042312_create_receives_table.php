@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('qty')->nullable()->default(0);
             $table->decimal('cost_price', 10, 2)->nullable()->default(0);
             $table->foreignUuid('receive_by_id')->references('id')->on('users');
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

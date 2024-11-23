@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->longText('description')->nullable()->default('-');
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });

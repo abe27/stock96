@@ -20,6 +20,22 @@ class Product extends Model
         'cost_price',
         'pics',
         'unit_id',
+        'color',
         'is_active',
     ];
+
+    public function getProfitAttribute()
+    {
+        return $this->price - $this->cost_price;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

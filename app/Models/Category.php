@@ -11,5 +11,5 @@ class Category extends Model
 {
     use HasFactory, Notifiable, Uuid;
 
-    protected $fillable = ['name', 'description', 'is_active'];
+    protected $fillable = ['name', 'description', 'color', 'is_active'];
 }

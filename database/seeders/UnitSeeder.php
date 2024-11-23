@@ -113,6 +113,8 @@ class UnitSeeder extends Seeder
 
         foreach ($obj as $item) {
             try {
+                $colors = ['info', 'success', 'primary', 'danger', 'warning'];
+                $item['color'] = $colors[rand(0, count($colors) - 1)];
                 \App\Models\Unit::create($item);
             } catch (\Exception $e) {
             }

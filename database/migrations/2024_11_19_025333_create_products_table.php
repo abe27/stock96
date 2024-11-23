@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('cost_price', 10, 2)->default(0.00);
             $table->string('pics')->nullable();
             $table->foreignUuid('unit_id')->nullable()->constrained();
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });

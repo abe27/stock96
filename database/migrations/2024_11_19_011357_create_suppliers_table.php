@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('mobile_bo')->nullable();
             $table->string('avatar')->nullable();
             $table->decimal('vat', 8, 2)->nullable()->default(0.0);
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });

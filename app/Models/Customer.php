@@ -21,6 +21,7 @@ class Customer extends Model
         'avatar',
         'vat',
         'is_active',
+        'color',
         'owner_id',
     ];
 }

@@ -18,6 +18,7 @@ class Supplier extends Model
         'mobile_bo',
         'avatar',
         'vat',
+        'color',
         'is_active',
     ];
 }

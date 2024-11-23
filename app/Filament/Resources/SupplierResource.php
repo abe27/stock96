@@ -31,7 +31,7 @@ class SupplierResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name', 'description'];
+        return ['name', 'mobile_bo'];
     }
 
     public static function form(Form $form): Form

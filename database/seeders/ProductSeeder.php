@@ -874,6 +874,7 @@ class ProductSeeder extends Seeder
                 $unit = Unit::where('name', $key['unit_id'])->first();
                 $key['category_id'] = $category->id;
                 $key['unit_id'] = $unit->id;
+                $key['product_code'] = random_int(10000000, 99999999);
                 Product::create($key);
             } catch (\Exception $e) {
             }

@@ -20,6 +20,7 @@ class Order extends Model
         'cost_price',
         'status_id',
         'order_by_id',
+        'color',
         'is_active',
     ];
 }

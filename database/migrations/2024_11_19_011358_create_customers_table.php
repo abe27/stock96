@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->decimal('vat', 8, 2)->nullable()->default(0.0);
             $table->boolean('is_active')->nullable()->default(true);
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->foreignUuid('owner_id')->nullable()->references('id')->on('users');
             $table->timestamps();
         });

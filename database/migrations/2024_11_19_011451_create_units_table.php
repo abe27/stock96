@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->longText('description')->nullable()->default('-');
             $table->decimal('conversion_rate', 10, 2)->nullable()->default(1);
+            $table->enum('color', ['info', 'success', 'primary', 'danger', 'warning'])->nullable()->default('danger');
             $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
         });

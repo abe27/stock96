@@ -11,5 +11,5 @@ class Unit extends Model
 {
     use HasFactory, Notifiable, Uuid;
 
-    protected $fillable = ['name', 'description', 'conversion_rate', 'is_active'];
+    protected $fillable = ['name', 'description', 'conversion_rate', 'color', 'is_active'];
 }

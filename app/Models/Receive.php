@@ -19,6 +19,7 @@ class Receive extends Model
         'qty',
         'cost_price',
         'receive_by_id',
+        'color',
         'is_active',
     ];
 }

@@ -17,7 +17,7 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
@@ -25,9 +25,9 @@ class CategoryResource extends Resource
 
     protected static ?string $slug = 'category';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationGroup = 'จัดการระบบ';
+    protected static ?string $navigationGroup = 'ข้อมูลสินค้า';
 
     public static function getGloballySearchableAttributes(): array
     {

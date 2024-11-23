@@ -53,6 +53,8 @@ class CustomerSeeder extends Seeder
 
         foreach ($obj as $data) {
             try {
+                $colors = ['info', 'success', 'primary', 'danger', 'warning'];
+                $item['color'] = $colors[rand(0, count($colors) - 1)];
                 \App\Models\Customer::create($data);
             } catch (\Exception $ex) {
             }
