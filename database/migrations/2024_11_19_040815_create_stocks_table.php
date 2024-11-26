@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignUuid('category_id')->unsigned()->constrained();
             $table->foreignUuid('product_id')->unsigned()->constrained()->cascadeOnDelete();
             $table->foreignUuid('unit_id')->unsigned()->constrained();
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->decimal('cost_price', 10, 2);
+            $table->integer('quantity')->nullable()->default(0);
+            $table->decimal('price', 10, 2)->nullable()->default(0);
+            $table->decimal('cost_price', 10, 2)->nullable()->default(0);
             $table->longText('description')->nullable();
             $table->integer('min_qty')->nullable()->default(0);
             $table->integer('max_qty')->nullable()->default(500);

@@ -17,9 +17,17 @@ class CurrencyResource extends Resource
 {
     protected static ?string $model = Currency::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
+
+    protected static ?string $navigationLabel = 'สกุลเงิน';
+
+    protected static ?string $slug = 'currency';
+
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationGroup = 'จัดการระบบ';
 
     public static function form(Form $form): Form
     {

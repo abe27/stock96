@@ -29,9 +29,9 @@ class StockResource extends Resource
 
     protected static ?string $slug = 'stock';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationGroup = 'ข้อมูลคลัง';
+    // protected static ?string $navigationGroup = 'ข้อมูลคลัง';
 
     public static function getGloballySearchableAttributes(): array
     {

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Models\Unit;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -875,7 +876,17 @@ class ProductSeeder extends Seeder
                 $key['category_id'] = $category->id;
                 $key['unit_id'] = $unit->id;
                 $key['product_code'] = random_int(10000000, 99999999);
-                Product::create($key);
+                $p = Product::create($key);
+
+                // Insert Stock
+                Stock::updateOrCreate([
+                    'product_id' => $p->id,
+                ], [
+                    'category_id' => $category->id,
+                    'product_id' => $p->id,
+                    'unit_id' => $unit->id,
+                    'is_active' => true,
+                ]);
             } catch (\Exception $e) {
             }
         }
