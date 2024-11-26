@@ -46,6 +46,7 @@ class ReceiveResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(4)
             ->schema([
                 // Forms\Components\TextInput::make('no')
                 //     ->required()
@@ -57,7 +58,8 @@ class ReceiveResource extends Resource
                     ->label('สินค้าจากร้าน')
                     ->searchable()
                     ->required()
-                    ->options(Supplier::pluck('name', 'id')),
+                    ->options(Supplier::pluck('name', 'id'))
+                    ->columnStart(1),
                 Forms\Components\DatePicker::make('received_on')
                     ->label('วันที่รับ')
                     ->default(Carbon::now()),
