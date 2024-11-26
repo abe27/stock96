@@ -15,9 +15,11 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Log;
+use Icetalker\FilamentTableRepeatableEntry\Facades\FilamentTableRepeatableEntry;
+use Icetalker\FilamentTableRepeater\Forms\Components\TableRepeater;
 use Illuminate\Support\Str;
 
 class ReceiveResource extends Resource
@@ -70,7 +72,8 @@ class ReceiveResource extends Resource
                 //     ->required(),
                 // Forms\Components\Toggle::make('is_active')
                 //     ->required(),
-                Repeater::make('receiveLines')
+                TableRepeater::make('receiveLines')
+                    ->label('รายการสินค้า')
                     ->relationship('receiveLines')
                     ->columns(4)
                     ->columnSpanFull()
@@ -85,6 +88,7 @@ class ReceiveResource extends Resource
                             ->afterStateUpdated(function (Set $set, ?string $state) {
                                 $product = Product::where('id', Str::trim($state))->first();
                                 $set('cost_price', $product->cost_price);
+                                $set('qty', 1);
                                 $set('unit_id', $product->unit_id);
                             }),
                         Forms\Components\TextInput::make('qty')
@@ -104,6 +108,7 @@ class ReceiveResource extends Resource
                             ->searchable()
                             ->options(Unit::pluck('name', 'id')),
                     ])
+                    ->addActionAlignment(Alignment::Start)
 
             ]);
     }
