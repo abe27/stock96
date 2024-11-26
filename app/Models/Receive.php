@@ -22,4 +22,19 @@ class Receive extends Model
         'color',
         'is_active',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
+
+    public function receiveBy()
+    {
+        return $this->belongsTo(User::class, 'receive_by_id', 'id');
+    }
+
+    public function receiveLines()
+    {
+        return $this->hasMany(ReceiveLine::class);
+    }
 }
