@@ -77,7 +77,7 @@ class ReceiveResource extends Resource
                 TableRepeater::make('receiveLines')
                     ->label('รายการสินค้า')
                     ->relationship('receiveLines')
-                    ->columns(4)
+                    ->columns(5)
                     ->columnSpanFull()
                     ->defaultItems(0)
                     ->schema([
@@ -88,11 +88,18 @@ class ReceiveResource extends Resource
                             ->options(Product::pluck('name', 'id'))
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, ?string $state) {
-                                $product = Product::where('id', Str::trim($state))->first();
-                                $set('cost_price', $product->cost_price);
-                                $set('qty', 1);
-                                $set('unit_id', $product->unit_id);
-                            }),
+                                if ($state) {
+                                    $product = Product::where('id', Str::trim($state))->first();
+                                    $set('cost_price', $product->cost_price);
+                                    $set('qty', 1);
+                                    $set('unit_id', $product->unit_id);
+                                } else {
+                                    $set('cost_price', 0);
+                                    $set('qty', 0);
+                                    $set('unit_id', null);
+                                }
+                            })
+                            ->columnSpan(2),
                         Forms\Components\TextInput::make('qty')
                             ->label('จำนวน')
                             ->numeric()
