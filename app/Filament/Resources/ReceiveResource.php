@@ -26,7 +26,7 @@ class ReceiveResource extends Resource
 {
     protected static ?string $model = Receive::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder-plus';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-circle';
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-folder-open';
 
@@ -126,24 +126,33 @@ class ReceiveResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
+                Tables\Columns\TextColumn::make('row_id')
+                    ->label('#')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('no')
+                    ->label('เลขที่')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tax_no')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('supplier_id'),
+                Tables\Columns\TextColumn::make('supplier.name')
+                    ->label('ร้านค้า/ตำแทนจำหน่วย'),
                 Tables\Columns\TextColumn::make('received_on')
-                    ->date()
+                    ->label('วันที่รับ')
+                    ->date('d-m-Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('tax_no')
+                    ->label('เลขที่ใบเสร็จ')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('qty')
+                    ->label('จำนวน')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cost_price')
+                    ->label('ราคา')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('receive_by_id'),
+                Tables\Columns\TextColumn::make('receiveBy.name')
+                    ->label('ผู้รับเข้า'),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('สถานะ')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
